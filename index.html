@@ -132,6 +132,48 @@
             opacity: 0;
         }
         
+        /* Responsive intro for mobile */
+        @media (max-width: 768px) {
+            .intro-logo {
+                width: 150px;
+                height: 150px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .intro-title {
+                font-size: 2rem;
+                letter-spacing: 0.2em;
+                padding: 0 20px;
+                text-align: center;
+            }
+            
+            .intro-subtitle {
+                font-size: 0.875rem;
+                letter-spacing: 0.2em;
+                padding: 0 20px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .intro-logo {
+                width: 120px;
+                height: 120px;
+                padding: 12px;
+            }
+            
+            .intro-title {
+                font-size: 1.5rem;
+                letter-spacing: 0.15em;
+            }
+            
+            .intro-subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 0.15em;
+            }
+        }
+        
         @keyframes logoEntrance {
             0% {
                 transform: scale(0) rotate(-180deg);
