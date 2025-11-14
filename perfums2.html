@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERFUMS STAR - Tu Aroma, Tu Elegancia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            background-attachment: fixed;
+        }
+        
+        .bg-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .perfume-card {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        
+        .perfume-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .perfume-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .card-glow {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Header -->
+    <header class="border-b-2 border-white bg-blur">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <h1 class="text-5xl font-bold tracking-widest text-center mb-3 glow">PERFUMS STAR</h1>
+            <p class="text-center text-lg tracking-widest text-gray-300">TU AROMA, TU ELEGANCIA</p>
+        </div>
+    </header>
+
+   
+                
+                    
+                </svg>
+                <inpu
+                    
+                    id="searchInput"
+                    
+                />
+            </div>
+            <p id="resultCount" class="text-center text-sm text-gray-400 mt-3 tracking-wide"></p>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="perfumeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+
+        <!-- No Results -->
+        <div id="noResults" class="hidden text-center py-20">
+            <p class="text-gray-400 text-xl tracking-wider">No se encontraron perfumes</p>
+            <p class="text-gray-500 text-sm mt-2">Intenta con otra búsqueda</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-white mt-20 bg-blur">
+        <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+            <p class="text-sm tracking-widest mb-2 glow">PERFUMS STAR</p>
+            <p class="text-xs tracking-wider text-gray-400">TU AROMA, TU ELEGANCIA</p>
+        </div>
+    </footer>
+
+    <script>
+        const perfumes = [
+            {
+                id: 1,
+                name: "Dior Sauvage Eau de Toilette",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Bergamota, pimienta y ambroxan",
+                description: "Aroma fresco y masculino. Ideal para uso diario o climas cálidos. Fragancia limpia y versátil.",
+                occasion: "Diario",
+                image: "https://www.dior.com/dw/image/v2/BGXS_PRD/on/demandware.static/-/Library-Sites-DiorSharedLibrary/default/dw6cec052a/images/beauty/07-NAVIGATION/2024/09_September/iconic-push/Y0998004_C099600455_E01_GHC.jpg?sw=800"
+            },
+            {
+                id: 2,
+                name: "Le Beau le parfum",
+                subtitle: "5ml-260MXN - 10ml-450MXN",
+                notes: "Coco, bergamota y madera de cedro",
+                description: "Fragancia tropical y sensual. Ligera y fresca, ideal para el verano o el día.",
+                occasion: "Verano",
+                image: "https://cdn.valmara.co/54480-large_default/perfume-para-hombre-le-beau-le-parfum-jran-paul-gaultier-125-ml.webp"
+            },
+            {
+                id: 3,
+                name: "Le Beau eau de Toilette",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Notas verdes, florales, coco y vetiver",
+                description: "Refrescante y natural, excelente para el día o primavera.",
+                occasion: "Día",
+                image: "https://ss701.liverpool.com.mx/xl/1086935691.jpg"
+            },
+            {
+                id: 4,
+                name: "Le Beau Paradise Garden",
+                subtitle: "5ml-240MXN - 10ml-400MXN",
+                notes: "coco, higo verde, menta, notas verdes y sándalo.",
+                description: "Fresco y tropical con un toque dulce-salado. Huele limpio, natural y veraniego..",
+                occasion: "Día",
+                image: "https://ss701.liverpool.com.mx/xl/1086935691.jpg"
+            },
+            {
+                id: 5,
+                name: "Le Male Elixir",
+                subtitle: "5ml-280MXN - 10ml-450MXN",
+                notes: "Lavanda, vainilla y miel",
+                description: "Cálido, intenso y muy duradero, recomendado para noches o invierno.",
+                occasion: "Noche",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-mSy9aqOhLWVUaGWHvhVhzx-9eRcvtmmUUoOPpn6Jn8k9d4H-tn5BYgi8rtbw7UP2Ln8&usqp=CAU"
+            },
+            {
+                id: 6,
+                name: "Le Male Elixir Absolut",
+                subtitle: "5ml-300MXN - 10ml-480MXN",
+                notes: "Ámbar, canela y vainilla",
+                description: "Versión más intensa. Ideal para noches frías o eventos elegantes.",
+                occasion: "Elegante",
+                image: "https://ss701.liverpool.com.mx/xl/1180415714.jpg"
+            },
+            {
+                id: 7,
+                name: "Invictus Victory Elixir",
+                subtitle: "5ml-300MXN - 10ml-520MXN",
+                notes: "Incienso, haba tonka y ámbar",
+                description: "Fragancia potente. Dulce y fuerte, perfecta para destacar en la noche.",
+                occasion: "Noche",
+                image: "https://resources.claroshop.com/imagenes-sanborns-ii/1200/3349668614523.jpg"
+            },
+            {
+                id: 8,
+                name: "Gentleman Reserve Privé",
+                subtitle: "5ml-280MXN - 10ml-480MXN",
+                notes: "Whisky, iris y madera de cedro",
+                description: "Aroma elegante y sofisticado, ideal para eventos formales y noches frías.",
+                occasion: "Formal",
+                image: "https://ss701.liverpool.com.mx/xl/1121424530.jpg"
+            },
+            {
+                id: 9,
+                name: "9AM Dive eau de perfum",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "menta, bergamota, limón, jengibre y maderas.",
+                description: "fragancia muy fresca, limpia y acuática con un toque cítrico. Perfecta para el día, verano y climas cálidos.",
+                occasion: "Dia",
+                image: "https://cdn11.bigcommerce.com/s-2vt02okold/images/stencil/1280x1280/products/3920/5861/MAFN9D_3__27221.1731099907.jpg?c=1"
+            },
+            {
+                id: 10,
+                name: "Hawas For Him",
+                subtitle: "5ml-130MXN - 10ml-240MXN",
+                notes: "Notas acuáticas, ámbar gris y manzana",
+                description: "Fresco, juvenil y versátil, perfecto para el día o verano.",
+                occasion: "Verano",
+                image: "https://ss701.liverpool.com.mx/xl/1133915431.jpg"
+            },
+            {
+                id: 11,
+                name: "Acqua di Gio Parfum",
+                subtitle: "5ml-340MXN - 10ml-550MXN",
+                notes: "Notas marinas, incienso y pachulí",
+                description: "Equilibrado y moderno, excelente para uso diario y climas templados.",
+                occasion: "Diario",
+                image: "https://cdn5.coppel.com/mkp/103019591-1.jpg?iresize=width:400,height:320"
+            },
+            {
+                id: 12,
+                name: "Stronger With You Intensely",
+                subtitle: "5ml-230MXN - 10ml-420MXN",
+                notes: "Vainilla, ámbar y canela",
+                description: "Dulce y cálido. Muy romántico, ideal para noches o invierno.",
+                occasion: "Romántico",
+                image: "https://elektra.vtexassets.com/arquivos/ids/19380193-800-450?v=638979739011130000&width=800&height=450&aspect=true"
+            },
+            {
+                id: 13,
+                name: "Toy boy Eau da parfum moschino",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "rosa, pimienta rosa, nuez moscada, bergamota y maderas.",
+                description: "Floral y especiado, moderno, llamativo y sensual.",
+                occasion: "Noche",
+                image: "https://www.costco.com.mx/medias/sys_master/products/hd3/h26/47465957425182.jpg"
+            },
+            {
+                id: 14,
+                name: "Scandal Absolut",
+                subtitle: "5ml-300MXN - 10ml-450MXN",
+                notes: "Lavanda, vainilla y vetiver",
+                description: "Aroma futurista. Sensual y moderno, ideal para la noche o citas.",
+                occasion: "Citas",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxU10aO8S9sNyO9vYfUKFkk7bwHI9rzgxyJA&s"
+            },
+            {
+                id: 15,
+                name: "Phantom Parfum",
+                subtitle: "5ml-300MXN - 10ml-460MXN",
+                notes: "Lavanda, vainilla y vetiver",
+                description: "Aroma futurista. Sensual y moderno, ideal para la noche o citas.",
+                occasion: "Noche",
+                image: "https://www.costco.com.mx/medias/sys_master/products/hc7/hdf/207381650997278.jpg"
+            },
+            {
+                id: 16,
+                name: "Bvlgari Man In Black",
+                subtitle: "5ml-270MXN - 10ml-470MXN",
+                notes: "Ron, cuero y especias",
+                description: "Cálido, fuerte y masculino, ideal para invierno o noches.",
+                occasion: "Invierno",
+                image: "https://abscents.com.mx/cdn/shop/files/48674_img-4798-bvlgari-bvlgari_man_in_black_720-fotor-2024032315507.jpg?v=1746999905"
+            },
+            {
+                id: 17,
+                name: "Valentino Parfum Intense",
+                subtitle: "5ml-280MXN - 10ml-480MXN",
+                notes: "Vainilla, iris y vetiver",
+                description: "Dulce, elegante y seductor, ideal para la noche.",
+                occasion: "Noche",
+                image: "https://ss701.liverpool.com.mx/xl/1141945196.jpg"
+            },
+            {
+                id: 18,
+                name: "212 Black",
+                subtitle: "5ml-280MXN - 10ml-460MXN",
+                notes: "Notas amaderadas con pimienta y cuero",
+                description: "Fragancia urbana y moderna, buena para el uso nocturno.",
+                occasion: "Urbano",
+                image: "https://fimgs.net/mdimg/perfume/o.46093.jpg"
+            },
+            {
+                id: 19,
+                name: "Dolce&Gabbana The One",
+                subtitle: "5ml-210MXN - 10ml-370MXN",
+                notes: "Tabaco, ámbar y jengibre",
+                description: "Cálido y sofisticado, perfecto para citas o cenas nocturnas.",
+                occasion: "Citas",
+                image: "https://abscents.com.mx/cdn/shop/files/THEONEEDP-fotor-20240329105727.jpg?v=1711731454"
+            },
+            {
+                id: 20,
+                name: "Bucephalus Armaf",
+                subtitle: "5ml-150MXN - 10ml-250MXN",
+                notes: "Cuero y especias",
+                description: "Aroma cálido y elegante. Ideal para la noche o climas fríos.",
+                occasion: "Noche",
+                image: "https://http2.mlstatic.com/D_Q_NP_928434-MLA97035554627_112025-O.webp"
+            },
+            {
+                id: 21,
+                name: "Odyssey Dubai Chocolate",
+                subtitle: "5ml-150MXN - 10ml-240MXN",
+                notes: "Cacao, vainilla y ámbar",
+                description: "Dulce y gourmand, ideal para invierno o ocasiones especiales.",
+                occasion: "Especial",
+                image: "https://acdn-us.mitiendanube.com/stores/001/310/915/products/img_1668-67a4f2ddafa2b3a32d17425838400427-1024-1024.webp"
+            },
+            {
+                id: 22,
+                name: "Santal 33",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Sándalo y cuero",
+                description: "Aroma amaderado y elegante. Ideal para uso diario o noches frescas.",
+                occasion: "Diario",
+                image: "https://www.elpalaciodehierro.com/on/demandware.static/-/Sites-palacio-master-catalog/default/dw1322b272/images/42367289/large/42367289_x1.jpg"
+            },
+            {
+                id: 23,
+                name: "Asad Bourbon",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Vainilla, tabaco y ron",
+                description: "Cálido y dulce. Perfecto para noches frías.",
+                occasion: "Invierno",
+                image: "https://ss701.liverpool.com.mx/xl/1171708491.jpg"
+            },
+            {
+                id: 24,
+                name: "Eros Energy",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Notas cítricas y menta",
+                description: "Fresco y vibrante. Ideal para el día o verano.",
+                occasion: "Verano",
+                image: "https://ss701.liverpool.com.mx/xl/1162299171.jpg"
+            },
+            {
+                id: 25,
+                name: "Sauvage Elixir Dior",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Canela, lavanda y ámbar",
+                description: "Intenso y especiado. Perfecto para la noche.",
+                occasion: "Noche",
+                image: "https://www.dior.com/on/demandware.static/-/Sites-master_dior/default/dw930c707c/Y0996460/Y0996460_C099600755_E01_GHC.jpg"
+            },
+            {
+                id: 26,
+                name: "Dolce Gabbana King",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Notas cítricas, lavanda y madera",
+                description: "Fresco, masculino y elegante para uso diario.",
+                occasion: "Diario",
+                image: "https://ss701.liverpool.com.mx/xl/1087202671.jpg"
+            },
+            {
+                id: 27,
+                name: "Odyssey Mandarin Sky",
+                subtitle: "5ml-250MXN - 10ml-420MXN",
+                notes: "Mandarina y vainilla",
+                description: "Cítrico y ambarado. Fresco pero con fondo cálido, perfecto para el día.",
+                occasion: "Día",
+                image: "https://http2.mlstatic.com/D_Q_NP_970248-MLU75885956193_042024-O.webp"
+            }
+        ];
+
+        function renderPerfumes(perfumesToRender) {
+            const grid = document.getElementById('perfumeGrid');
+            const noResults = document.getElementById('noResults');
+            const resultCount = document.getElementById('resultCount');
+
+            grid.innerHTML = '';
+
+            if (perfumesToRender.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                resultCount.textContent = '0 perfumes';
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+            resultCount.textContent = `${perfumesToRender.length} ${perfumesToRender.length === 1 ? 'perfume' : 'perfumes'}`;
+
+            perfumesToRender.forEach(perfume => {
+                const card = document.createElement('div');
+                card.className = 'perfume-card cursor-pointer border-2 border-white card-glow';
+                
+                card.innerHTML = `
+                    <div class="aspect-square bg-black border-b-2 border-white relative overflow-hidden">
+                        <img src="${perfume.image}" alt="${perfume.name}" class="perfume-img">
+                    </div>
+                    <div class="p-5">
+                        <div class="mb-3">
+                            <h3 class="text-lg font-bold tracking-wide mb-1 text-white">${perfume.name}</h3>
+                            ${perfume.subtitle ? `<p class="text-xs text-gray-400 tracking-wider uppercase">${perfume.subtitle}</p>` : ''}
+                        </div>
+                        <div class="mb-3">
+                            <p class="text-xs font-bold tracking-wider uppercase text-gray-400 mb-1">Notas</p>
+                            <p class="text-sm text-gray-300 leading-relaxed">${perfume.notes}</p>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3 leading-relaxed">${perfume.description}</p>
+                        <div class="inline-block px-3 py-1 bg-white text-black text-xs tracking-widest uppercase font-bold">
+                            ${perfume.occasion}
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function filterPerfumes(searchTerm) {
+            const term = searchTerm.toLowerCase().trim();
+            
+            if (!term) {
+                return perfumes;
+            }
+
+            return perfumes.filter(perfume => {
+                return perfume.name.toLowerCase().includes(term) ||
+                       perfume.notes.toLowerCase().includes(term) ||
+                       perfume.occasion.toLowerCase().includes(term) ||
+                       perfume.description.toLowerCase().includes(term);
+            });
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const filtered = filterPerfumes(e.target.value);
+            renderPerfumes(filtered);
+        });
+
+        // Initial render
+        renderPerfumes(perfumes);
+    </script>
+</body>
+</html>
