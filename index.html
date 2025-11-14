@@ -85,14 +85,140 @@
                 transform: scale(1.2);
             }
         }
+        
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease-in-out 3s forwards;
+        }
+        
+        .intro-logo {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            animation: logoEntrance 1.5s ease-out forwards;
+            margin-bottom: 30px;
+        }
+        
+        .intro-title {
+            font-size: 4rem;
+            font-weight: bold;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: titleEntrance 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+            margin-bottom: 15px;
+        }
+        
+        .intro-subtitle {
+            font-size: 1.5rem;
+            letter-spacing: 0.3em;
+            color: #aaa;
+            animation: subtitleEntrance 1.5s ease-out 1s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes logoEntrance {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes titleEntrance {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes subtitleEntrance {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        .main-content {
+            opacity: 0;
+            animation: contentFadeIn 1s ease-in 3.5s forwards;
+        }
+        
+        @keyframes contentFadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .price-subtitle {
+            text-shadow: 
+                1px 1px 2px rgba(0, 0, 0, 0.8),
+                -1px -1px 2px rgba(255, 255, 255, 0.3),
+                0 0 10px rgba(255, 215, 0, 0.3);
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
     </style>
 </head>
 <body class="bg-black text-white">
+    <!-- Intro Screen -->
+    <div class="intro-screen">
+        <img src="https://imgur.com/r7UMElR" alt="PERFUMS STAR Logo" class="intro-logo">
+        <h1 class="intro-title">PERFUMS STAR</h1>
+        <p class="intro-subtitle">TU AROMA, TU ELEGANCIA</p>
+    </div>
+    
+    <div class="main-content">
     <!-- Header -->
     <header class="border-b-2 border-white bg-blur">
-        <div class="max-w-7xl mx-auto px-6 py-12">
-            <h1 class="text-5xl font-bold tracking-widest text-center mb-3 glow">PERFUMS STAR</h1>
-            <p class="text-center text-lg tracking-widest text-gray-300">TU AROMA, TU ELEGANCIA</p>
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col items-center">
+                <img src="https://imgur.com/r7UMElR" alt="PERFUMS STAR Logo" class="w-32 h-32 mb-4 object-contain">
+                <h1 class="text-5xl font-bold tracking-widest text-center mb-3 glow">PERFUMS STAR</h1>
+                <p class="text-center text-lg tracking-widest text-gray-300">TU AROMA, TU ELEGANCIA</p>
+            </div>
         </div>
     </header>
 
@@ -115,6 +241,7 @@
             <p class="text-xs tracking-wider text-gray-400">TU AROMA, TU ELEGANCIA</p>
         </div>
     </footer>
+    </div>
 
     <script>
         const perfumes = [
@@ -389,7 +516,7 @@
                     <div class="p-3">
                         <div class="mb-2">
                             <h3 class="text-sm font-bold tracking-wide mb-1 text-white">${perfume.name}</h3>
-                            ${perfume.subtitle ? `<p class="text-xs text-gray-400 tracking-wider uppercase">${perfume.subtitle}</p>` : ''}
+                            ${perfume.subtitle ? `<p class="price-subtitle text-xs tracking-wider uppercase">${perfume.subtitle}</p>` : ''}
                         </div>
                         <div class="mb-2">
                             <p class="text-xs font-bold tracking-wider uppercase text-gray-400 mb-1">Notas</p>
