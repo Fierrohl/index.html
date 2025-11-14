@@ -39,8 +39,10 @@
         .perfume-img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            padding: 20px;
+            object-fit: cover;
+            object-position: center;
+            border: 3px solid #000000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.3);
         }
         
         input::placeholder {
@@ -54,6 +56,35 @@
         .card-glow {
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
         }
+        
+        .star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 3px 1px rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            z-index: 1;
+            animation: twinkle 3s infinite;
+        }
+        
+        .star.bright {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+        }
+        
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
     </style>
 </head>
 <body class="bg-black text-white">
@@ -65,21 +96,10 @@
         </div>
     </header>
 
-   
-                
-                    
-                </svg>
-                <inpu
-                    
-                    id="searchInput"
-                    
-                />
-            </div>
-            <p id="resultCount" class="text-center text-sm text-gray-400 mt-3 tracking-wide"></p>
-        </div>
-
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 py-12">
         <!-- Product Grid -->
-        <div id="perfumeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+        <div id="perfumeGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6"></div>
 
         <!-- No Results -->
         <div id="noResults" class="hidden text-center py-20">
@@ -346,20 +366,17 @@
         function renderPerfumes(perfumesToRender) {
             const grid = document.getElementById('perfumeGrid');
             const noResults = document.getElementById('noResults');
-            const resultCount = document.getElementById('resultCount');
 
             grid.innerHTML = '';
 
             if (perfumesToRender.length === 0) {
                 grid.classList.add('hidden');
                 noResults.classList.remove('hidden');
-                resultCount.textContent = '0 perfumes';
                 return;
             }
 
             grid.classList.remove('hidden');
             noResults.classList.add('hidden');
-            resultCount.textContent = `${perfumesToRender.length} ${perfumesToRender.length === 1 ? 'perfume' : 'perfumes'}`;
 
             perfumesToRender.forEach(perfume => {
                 const card = document.createElement('div');
@@ -369,17 +386,17 @@
                     <div class="aspect-square bg-black border-b-2 border-white relative overflow-hidden">
                         <img src="${perfume.image}" alt="${perfume.name}" class="perfume-img">
                     </div>
-                    <div class="p-5">
-                        <div class="mb-3">
-                            <h3 class="text-lg font-bold tracking-wide mb-1 text-white">${perfume.name}</h3>
+                    <div class="p-3">
+                        <div class="mb-2">
+                            <h3 class="text-sm font-bold tracking-wide mb-1 text-white">${perfume.name}</h3>
                             ${perfume.subtitle ? `<p class="text-xs text-gray-400 tracking-wider uppercase">${perfume.subtitle}</p>` : ''}
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <p class="text-xs font-bold tracking-wider uppercase text-gray-400 mb-1">Notas</p>
-                            <p class="text-sm text-gray-300 leading-relaxed">${perfume.notes}</p>
+                            <p class="text-xs text-gray-300 leading-relaxed">${perfume.notes}</p>
                         </div>
-                        <p class="text-xs text-gray-400 mb-3 leading-relaxed">${perfume.description}</p>
-                        <div class="inline-block px-3 py-1 bg-white text-black text-xs tracking-widest uppercase font-bold">
+                        <p class="text-xs text-gray-400 mb-2 leading-relaxed line-clamp-2">${perfume.description}</p>
+                        <div class="inline-block px-2 py-1 bg-white text-black text-xs tracking-widest uppercase font-bold">
                             ${perfume.occasion}
                         </div>
                     </div>
@@ -389,30 +406,36 @@
             });
         }
 
-        function filterPerfumes(searchTerm) {
-            const term = searchTerm.toLowerCase().trim();
-            
-            if (!term) {
-                return perfumes;
-            }
-
-            return perfumes.filter(perfume => {
-                return perfume.name.toLowerCase().includes(term) ||
-                       perfume.notes.toLowerCase().includes(term) ||
-                       perfume.occasion.toLowerCase().includes(term) ||
-                       perfume.description.toLowerCase().includes(term);
-            });
-        }
-
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const filtered = filterPerfumes(e.target.value);
-            renderPerfumes(filtered);
-        });
-
         // Initial render
         renderPerfumes(perfumes);
+        
+        // Create starry night sky
+        function createStars() {
+            const starCount = 150; // Number of stars
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random bright stars (about 20% will be brighter)
+                if (Math.random() > 0.8) {
+                    star.classList.add('bright');
+                }
+                
+                // Random position across the screen
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay for twinkling effect
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (2 + Math.random() * 2) + 's';
+                
+                document.body.appendChild(star);
+            }
+        }
+        
+        // Create stars on load
+        createStars();
     </script>
 </body>
 </html>
-
